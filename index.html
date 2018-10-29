@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Neighbourhood map</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="assets/css/bulma.min.css"/>
+		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/css/ol.css" type="text/css">
+		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+		<style>
+
+			html{
+				height: 100%;
+			}
+
+			body{
+				width: 100%;
+				height: 100%;
+			}
+
+			.navbar{
+				height: 3.25em;
+				position: fixed;
+				width: 100%
+			}
+
+			.navbar-burger{
+				margin-right: auto;
+				margin-left: 0;
+			}
+
+			aside{
+				width: 350px;
+				height: 100%;
+				top: 3.25em;
+				z-index: 1;
+				left: -450px;
+				position: fixed;
+				transition: 0.5s;
+				overflow-x: hidden;
+				background: #eeeeee;
+				box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+			}
+
+			aside section{
+				display: flex;
+				padding:8px;
+				flex-direction: column;
+			}
+
+			aside section .field{
+				margin: 0 auto;
+			}
+
+			main{
+				flex: 1;
+			    transition: margin-left .5s;
+			    height: 100%;
+			}
+
+			#container{
+				background: black;
+				height: 100%;
+			}
+
+			#map{
+				width: auto;
+				height: 100%;
+			}
+
+			/* Show burger menu on large screens */
+			@media screen and (min-width: 1088px){
+				.navbar-burger {
+				    display: block;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a role="button" id="burger" class="navbar-burger burger" aria-label="menu" aria-expanded="false" >
+				  <span aria-hidden="false"></span>
+				  <span aria-hidden="false"></span>
+				  <span aria-hidden="false"></span>
+				</a>
+				<a class="navbar-item" href="#">
+			      <h1>My Neighbourhood</h1>
+			    </a>
+			</div>
+		</nav>
+		<main>
+			<aside class="menu">
+				<section>
+					<div class="field has-addons">
+					  <div class="control">
+					    <input class="input is-rounded" type="text" placeholder="Find a repository">
+					  </div>
+					  <div class="control">
+					    <a class="button is-info is-rounded">
+					      Search
+					    </a>
+					  </div>
+					</div>
+					<div>
+						<ul class="menu-list">
+						 	<li><a>Team Settings</a></li>
+							<li><a class="is-active">Manage Your Team</a></li>
+							<li><a>Members</a></li>
+						    <li><a>Plugins</a></li>
+						   	<li><a>Add a member</a></li>
+						    <li><a>Invitations</a></li>
+						    <li><a>Cloud Storage Environment Settings</a></li>
+						    <li><a>Authentication</a></li>
+						</ul>
+					</div>
+				</section>
+			</aside>
+			<div id="container">
+				<div id="map"></div>
+			</div>
+		</main>
+		<script>
+			document.getElementById("burger").addEventListener('click',function(){
+				const menu = document.getElementsByTagName("aside")[0];
+				const widthPx = window.getComputedStyle(menu, null).getPropertyValue("width");
+
+				if(menu.style.display === 'none'){
+					return;
+				}
+				const displayed = menu.style.left == '0px';
+				if(displayed){
+					menu.style.left = '-'+widthPx;
+				}else{
+					menu.style.left = 0;
+				}
+				console.log(menu.style.left);
+			});
+		</script>
+		<script type="text/javascript">
+	      var map = new ol.Map({
+	        target: 'map',
+	        layers: [
+	          new ol.layer.Tile({
+	            source: new ol.source.OSM()
+	          })
+	        ],
+	        view: new ol.View({
+	          center: ol.proj.fromLonLat([37.41, 8.82]),
+	          zoom: 4
+	        })
+	      });
+	    </script>
+	</body>
+</html>
