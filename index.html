@@ -5,8 +5,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="assets/css/bulma.min.css"/>
-		<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/css/ol.css" type="text/css">
-		<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
 		<style>
 
 			html{
@@ -50,6 +48,7 @@
 
 			aside section .field{
 				margin: 0 auto;
+				width: 100%;
 			}
 
 			main{
@@ -92,26 +91,14 @@
 		<main>
 			<aside class="menu">
 				<section>
-					<div class="field has-addons">
+					<div class="field">
 					  <div class="control">
-					    <input class="input is-rounded" type="text" placeholder="Find a repository">
-					  </div>
-					  <div class="control">
-					    <a class="button is-info is-rounded">
-					      Search
-					    </a>
+					    <input class="input is-rounded" type="text" placeholder="Filter" data-bind="textInput: filterTerm">
 					  </div>
 					</div>
 					<div>
-						<ul class="menu-list">
-						 	<li><a>Team Settings</a></li>
-							<li><a class="is-active">Manage Your Team</a></li>
-							<li><a>Members</a></li>
-						    <li><a>Plugins</a></li>
-						   	<li><a>Add a member</a></li>
-						    <li><a>Invitations</a></li>
-						    <li><a>Cloud Storage Environment Settings</a></li>
-						    <li><a>Authentication</a></li>
+						<ul class="menu-list" data-bind="foreach: filteredPlaces">
+						 	<li><a data-bind="text: $data">Team Settings</a></li>
 						</ul>
 					</div>
 				</section>
@@ -134,22 +121,25 @@
 				}else{
 					menu.style.left = 0;
 				}
-				console.log(menu.style.left);
 			});
 		</script>
-		<script type="text/javascript">
-	      var map = new ol.Map({
-	        target: 'map',
-	        layers: [
-	          new ol.layer.Tile({
-	            source: new ol.source.OSM()
-	          })
-	        ],
-	        view: new ol.View({
-	          center: ol.proj.fromLonLat([37.41, 8.82]),
-	          zoom: 4
-	        })
-	      });
-	    </script>
+		<script>
+	     // TODO: Create a map variable
+	     var map;
+	     // TODO: Complete the following function to initialize the map
+	     function initMap() {
+	       // TODO: use a constructor to create a new map JS object. You can use the coordinates
+	       // we used, 40.7413549, -73.99802439999996 or your own!
+	        map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: 40.7413549, lng: -73.9980244},
+	          zoom: 13
+	        });
+	     }
+	   </script>
+	   	<script src="assets/js/knockout.js"></script>
+    	<script src="assets/js/app.js"></script>
+		<!--<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB45Zv976-xipnkRc4KTHEDNwXWd7ivSkI&v=3&callback=initMap">
+   		</script>-->
 	</body>
 </html>
