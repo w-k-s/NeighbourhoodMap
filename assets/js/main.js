@@ -4,40 +4,43 @@ var places = [{
 			lat: 41.0054,
 			lng: 28.9768
 		},
-		info:"Historic mosque built by Sultan Ahmet in 1609",
+		wikipediaTitle: 'Sultan_Ahmed_Mosque',
 	},{
 		name: 'Aya Sofya',
 		position: {
 			lat: 41.0086,
 			lng: 28.9802
 		},
-		info: 'Originally a church, then a mosque and now a museum'
+		wikipediaTitle: 'Hagia_Sophia',
 	},{
 		name: 'Topkapi Palace',
 		position:{
 			lat: 41.0115,
 			lng: 28.9834
 		},
-		info: "Historic residence of the ottoman sultans"
+		wikipediaTitle: 'Topkapı_Palace',
 	},{
-		name: 'Çemberlitas Muhallebicisi',
+		name: 'Column of Constantine',
 		position: {
 			lat: 41.0080753,
 			lng: 28.9716165
 		},
-		info: 'Authentic Turkish Restaurant'
+		wikipediaTitle: 'Column_of_Constantine'
 	},{
-		name: 'Cankurtaran Railway station',
+		name: 'Grand Bazar',
 		position: {
-			lat: 41.0042462,
-			lng: 28.9811903
+			lat: 41.010581,
+			lng: 28.967933
 		},
-		info: "Old 1920s style railway station"
+		wikipediaTitle: 'Grand_Bazaar,_Istanbul'
 	}
 ];
 
 var map;
 var markers = [];
+var infoWindow;
+var wikipediaService = new WikipediaService();
+
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 	  center: places[0].position,
@@ -71,7 +74,24 @@ function removeMarkers(){
 }
 
 function onMarkerClicked(marker){
-	toggleBounce(marker);
+	if(infoWindow){
+		infoWindow.close();
+		infoWindow = null;
+	}
+	const place = getPlaceForMarker(marker);
+	if(place){
+		wikipediaService.loadArticle(place.wikipediaTitle,function(content){
+			infoWindow = new google.maps.InfoWindow({
+				content: content,
+				maxWidth: 300
+			});
+			infoWindow.open(map, marker);
+		},function(error){
+			console.log('error');
+			console.log(error);
+		});
+		toggleBounce(marker);
+	}
 }
 
 function toggleBounce(marker) {
@@ -86,7 +106,12 @@ function toggleBounce(marker) {
 }
 
 function getMarkerForPlace(place){
-	const matches = markers.filter((marker)=>{return marker.title === place.name});
+	const matches = markers.filter((marker)=> marker.title === place.name);
+	return matches.length == 0? null : matches[0];
+}
+
+function getPlaceForMarker(marker){
+	const matches = places.filter((place) => place.name === marker.title );
 	return matches.length == 0? null : matches[0];
 }
 

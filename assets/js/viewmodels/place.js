@@ -5,10 +5,10 @@ var ViewModel = function(places){
 
 	this.filteredPlaces = ko.observableArray(places);
 	
-	self.selectedPlace = ko.observable({});
+	this.selectedPlace = ko.observable({});
 
-	self.filterTerm = ko.observable("");
-	self.filterTerm.subscribe(function(newValue){
+	this.filterTerm = ko.observable("");
+	this.filterTerm.subscribe(function(newValue){
 		const filterTerm = newValue.trim().toLowerCase()
 		if(!filterTerm || filterTerm.length == 0){
 			self.filteredPlaces(self.favoritePlaces());
@@ -17,7 +17,7 @@ var ViewModel = function(places){
 		}
 	});
 
-	self.selectPlace = function(place){
+	this.selectPlace = function(place){
 		self.selectedPlace(place);
 	}
 }

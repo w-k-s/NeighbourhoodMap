@@ -9,14 +9,14 @@
 - [x] Show markers on init, and center on area
 - [x] Highlight markers on click
 - [x] Highlight markers on place click
-- [ ] Show info window and highlight marker on place click
-- [ ] Show info from third-party api
+- [x] Show info window and highlight marker on place click
+- [x] Show info from third-party api
 - [ ] Attribute thirs-party api
 - [ ] Responsive UI
 
 # Extra Credit
 
-- [ ] Store data in localStorage
+- [x] Store data in localStorage
 - [ ] Different style markers depending upon location type
 - [ ] Minify js build process
 - [ ] favourite places
