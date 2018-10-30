@@ -97,8 +97,8 @@
 					  </div>
 					</div>
 					<div>
-						<ul class="menu-list" data-bind="foreach: filteredPlaces">
-						 	<li><a data-bind="text: $data">Team Settings</a></li>
+						<ul class="menu-list" data-bind="foreach: filteredPlaces()">
+						 	<li><a data-bind="text: name, click: $parent.selectPlace">---</a></li>
 						</ul>
 					</div>
 				</section>
@@ -123,23 +123,12 @@
 				}
 			});
 		</script>
-		<script>
-	     // TODO: Create a map variable
-	     var map;
-	     // TODO: Complete the following function to initialize the map
-	     function initMap() {
-	       // TODO: use a constructor to create a new map JS object. You can use the coordinates
-	       // we used, 40.7413549, -73.99802439999996 or your own!
-	        map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: 40.7413549, lng: -73.9980244},
-	          zoom: 13
-	        });
-	     }
-	   </script>
-	   	<script src="assets/js/knockout.js"></script>
-    	<script src="assets/js/app.js"></script>
-		<!--<script async defer
+		<script src="assets/js/knockout.js"></script>
+		<script src="assets/js/models/place.js"></script>
+		<script src="assets/js/viewmodels/place.js"></script>
+    	<script src="assets/js/main.js"></script>
+		<script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB45Zv976-xipnkRc4KTHEDNwXWd7ivSkI&v=3&callback=initMap">
-   		</script>-->
+   		</script>
 	</body>
 </html>
