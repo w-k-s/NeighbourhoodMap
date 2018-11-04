@@ -13,7 +13,7 @@
 - [x] Show info from third-party api
 - [ ] Attribute third-party api
 - [x] Responsive UI
-- [ ] move map
+- [x] move map
 - [ ] document
 - [ ] readme
 

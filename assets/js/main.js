@@ -13,6 +13,7 @@ function init() {
 	});
 	map.addListener('click',function(){
 		closeInfoWindow();
+		closeMenu();
 	});
 
 	const placesService = new PlacesService();
@@ -128,6 +129,7 @@ function closeInfoWindow(){
  */
 
 const menu = document.getElementsByTagName("aside")[0];
+const container = document.getElementById("container");
 const widthPx = window.getComputedStyle(menu, null).getPropertyValue("width");
 
 function isMenuOpen(){
@@ -136,10 +138,12 @@ function isMenuOpen(){
 
 function openMenu(){
 	menu.style.left = 0;
+	container.style.marginLeft = widthPx;
 }
 
 function closeMenu(){
 	menu.style.left = '-'+widthPx;
+	container.style.marginLeft = 0;
 }
 
 document.getElementById("burger").addEventListener('click',function(){
