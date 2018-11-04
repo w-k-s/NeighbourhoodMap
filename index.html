@@ -67,6 +67,10 @@
 				height: 100%;
 			}
 
+			.menu-list-item > img{
+				display: inline;
+			}
+
 			/* Show burger menu on large screens */
 			@media screen and (min-width: 1088px){
 				.navbar-burger {
@@ -98,7 +102,9 @@
 					</div>
 					<div>
 						<ul class="menu-list" data-bind="foreach: filteredPlaces">
-						 	<li><a data-bind="text: name, click: $parent.selectPlace">---</a></li>
+						 	<li class="menu-list-item"><span><a data-bind="text: name, click: $parent.selectPlace">---</a>
+						 	<img src="./assets/img/favorite.svg" width="20px" height="100%" data-bind="attr: {src: favorite()? './assets/img/favorite.svg' : './assets/img/favorite-outline.svg'}"></span>
+						 	</li>
 						</ul>
 					</div>
 				</section>
@@ -109,12 +115,13 @@
 		</main>
 		<script src="assets/js/jquery.js"></script>
 		<script src="assets/js/knockout.js"></script>
+		<script src="assets/js/services/placesService.js"></script>
 		<script src="assets/js/services/wikipediaService.js"></script>
 		<script src="assets/js/models/place.js"></script>
 		<script src="assets/js/viewmodels/place.js"></script>
     	<script src="assets/js/main.js"></script>
 		<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB45Zv976-xipnkRc4KTHEDNwXWd7ivSkI&v=3&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB45Zv976-xipnkRc4KTHEDNwXWd7ivSkI&v=3&callback=init">
    		</script>
 
 	</body>
