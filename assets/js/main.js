@@ -1,11 +1,11 @@
 /**
- * Google Map
+ * Init App
  */
 
 var map;
 var markers = [];
 var infoWindow;
-var wikipediaService = new WikipediaService();
+var viewModel;
 
 function init() {	
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -16,7 +16,8 @@ function init() {
 	});
 
 	const placesService = new PlacesService();
-	const viewModel = new ViewModel(placesService);
+	const wikipediaService = new WikipediaService();
+	viewModel = new ViewModel(placesService, wikipediaService);
 	ko.applyBindings(viewModel);
 
 	viewModel.places.subscribe((places)=>{
@@ -37,8 +38,29 @@ function init() {
 		}
 	});
 
+	viewModel.placeInfo.subscribe((placeInfo)=>{
+		const marker = getMarkerForPlace(placeInfo.place);
+		if(marker){
+			infoWindow = new google.maps.InfoWindow({
+					content: placeInfo.info,
+					maxWidth: 300
+			});
+			infoWindow.open(map, marker);
+		}
+	})
+
 	viewModel.loadPlaces();
 }
+
+function onPlaceSelected(marker, place){
+	closeInfoWindow();
+	toggleBounce(marker);
+	viewModel.loadPlaceInfo(place);
+}
+
+/**
+ * Map - Markers
+ */
 
 function addMarkers(map,places){
 	var bounds = new google.maps.LatLngBounds();
@@ -48,6 +70,7 @@ function addMarkers(map,places){
 	    	position: new google.maps.LatLng(place.position().lat(), place.position().lng()),
 	    	map: map,
 	    	animation: google.maps.Animation.DROP,
+	    	icon: getPinImage(place)
 	    });
 		markers.push(marker);
 		bounds.extend(marker.getPosition());
@@ -59,33 +82,18 @@ function addMarkers(map,places){
 	map.setCenter(bounds.getCenter());
 }
 
+function getPinImage(place){
+	const pinColor = place.favorite() ? 'FFDF00' : 'ff0000';
+	const url = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor;
+	return new google.maps.MarkerImage(url,
+    	new google.maps.Size(21, 34),
+    	new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
+}
+
 function removeMarkers(){
 	markers.forEach((marker)=>marker.setMap(null));
 	markers = [];
-}
-
-function onPlaceSelected(marker, place){
-	closeInfoWindow();
-	
-	wikipediaService.loadArticle(place.wikipediaTitle(),function(content){
-		infoWindow = new google.maps.InfoWindow({
-			content: content,
-			maxWidth: 300
-		});
-		infoWindow.open(map, marker);
-	},function(error){
-		console.log('error');
-		console.log(error);
-	});
-	toggleBounce(marker);
-	
-}
-
-function closeInfoWindow(){
-	if(infoWindow){
-		infoWindow.close();
-		infoWindow = null;
-	}
 }
 
 function toggleBounce(marker) {
@@ -104,13 +112,19 @@ function getMarkerForPlace(place){
 	return matches.length == 0? null : matches[0];
 }
 
-function getPlaceForMarker(marker){
-	const matches = places.filter((place) => place.name() === marker.title );
-	return matches.length == 0? null : matches[0];
+/**
+ * Map - Info Window
+ */
+
+function closeInfoWindow(){
+	if(infoWindow){
+		infoWindow.close();
+		infoWindow = null;
+	}
 }
 
 /**
- * Initialize Application
+ * Hamburger Menu
  */
 
 const menu = document.getElementsByTagName("aside")[0];

@@ -1,7 +1,8 @@
-var ViewModel = function(placesService){
+var ViewModel = function(placesService, wikipediaService){
 	var self = this;
 	
 	this.placesService = placesService;
+	this.wikipediaService = wikipediaService;
 
 	this.places = ko.observableArray([]);
 
@@ -10,6 +11,8 @@ var ViewModel = function(placesService){
 	this.selectedPlace = ko.observable({});
 
 	this.filterTerm = ko.observable("");
+
+	this.placeInfo = ko.observable({});
 
 	this.filterTerm.subscribe(function(newValue){
 		const filterTerm = newValue.trim().toLowerCase()
@@ -25,7 +28,10 @@ var ViewModel = function(placesService){
 	}
 
 	this.favoritePlace = function(place){
-
+		place.favorite(!place.favorite());
+		const places = self.places().map((place)=>ko.toJS(place));
+		self.placesService.savePlaces(places);
+		self.filteredPlaces(self.filteredPlaces());
 	}
 
 	this.loadPlaces = function(){
@@ -37,5 +43,16 @@ var ViewModel = function(placesService){
 		));
 		self.places(places);
 		self.filteredPlaces(places);
+	}
+
+	this.loadPlaceInfo = function(place){
+		self.wikipediaService.loadArticle(place.wikipediaTitle(),function(content){
+			self.placeInfo({
+				place: place,
+				info: content
+			});
+		},function(error){
+			console.log(`Error loading place info: ${error}`);
+		});
 	}
 }

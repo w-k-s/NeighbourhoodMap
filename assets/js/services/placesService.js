@@ -50,6 +50,6 @@ const PlacesService = function(){
 	};
 
 	this.savePlaces = function(places){
-		localStorage.places = places.toJSON();
+		localStorage.places = JSON.stringify(places);
 	}
 }
