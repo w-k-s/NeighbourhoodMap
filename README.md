@@ -22,4 +22,4 @@
 - [x] Store data in localStorage
 - [x] Different style markers depending upon location type
 - [x] favourite places
-- [ ] Minify js build process
+- [x] Minify js build process

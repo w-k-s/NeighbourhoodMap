@@ -1,0 +1,14 @@
+{
+  "name": "NeighbourhoodMap",
+  "version": "0.1.0",
+  "author": "W.K.S",
+  "private": true,
+  "devDependencies": {
+    "grunt": "1.0.3",
+    "grunt-contrib-cssmin": "3.0.0",
+    "grunt-contrib-uglify-es": "3.3.0"
+  },
+  "dependencies": {
+    "matchdep": "^2.0.0"
+  }
+}
