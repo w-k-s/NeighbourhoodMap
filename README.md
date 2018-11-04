@@ -11,7 +11,7 @@
 - [x] Highlight markers on place click
 - [x] Show info window and highlight marker on place click
 - [x] Show info from third-party api
-- [ ] Attribute third-party api
+- [x] Attribute third-party api
 - [x] Responsive UI
 - [x] move map
 - [ ] document
