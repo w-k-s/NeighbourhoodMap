@@ -13,7 +13,7 @@ var ViewModel = function(places){
 		if(!filterTerm || filterTerm.length == 0){
 			self.filteredPlaces(self.favoritePlaces());
 		}else{
-			self.filteredPlaces(self.favoritePlaces().filter((it)=>it.name.toLowerCase().indexOf(filterTerm) !== -1))
+			self.filteredPlaces(self.favoritePlaces().filter((it)=>it.name().toLowerCase().indexOf(filterTerm) !== -1))
 		}
 	});
 

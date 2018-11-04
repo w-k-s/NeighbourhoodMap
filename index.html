@@ -107,22 +107,6 @@
 				<div id="map"></div>
 			</div>
 		</main>
-		<script>
-			document.getElementById("burger").addEventListener('click',function(){
-				const menu = document.getElementsByTagName("aside")[0];
-				const widthPx = window.getComputedStyle(menu, null).getPropertyValue("width");
-
-				if(menu.style.display === 'none'){
-					return;
-				}
-				const displayed = menu.style.left == '0px';
-				if(displayed){
-					menu.style.left = '-'+widthPx;
-				}else{
-					menu.style.left = 0;
-				}
-			});
-		</script>
 		<script src="assets/js/jquery.js"></script>
 		<script src="assets/js/knockout.js"></script>
 		<script src="assets/js/services/wikipediaService.js"></script>
@@ -132,5 +116,6 @@
 		<script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB45Zv976-xipnkRc4KTHEDNwXWd7ivSkI&v=3&callback=initMap">
    		</script>
+
 	</body>
 </html>
