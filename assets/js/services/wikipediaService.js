@@ -51,7 +51,7 @@ var WikipediaService = function() {
                     `<h1>${title}</h1><br/><img src="${imgSrc}" width="${width}" height="${height}"/><br/><div>${extract}</div>`;
                 onSuccess(content);
             },
-            fail: function(error) {
+            error: function(error) {
                 onError(error);
             }
         });

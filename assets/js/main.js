@@ -54,6 +54,10 @@ function init() {
             });
             infoWindow.open(map, marker);
         }
+    });
+
+    viewModel.placeInfoError.subscribe((errorMessage)=>{
+    	window.alert(errorMessage);
     })
 
     viewModel.loadPlaces();

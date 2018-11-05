@@ -25,6 +25,9 @@ var ViewModel = function(placesService, wikipediaService) {
     /* observable for the place info that is displayed */
     this.placeInfo = ko.observable({});
 
+    /* observable for error when loading place info */
+    this.placeInfoError = ko.observable("");
+
     /* Subscribe to changes in filterTerm and update filteredPlaces accordingly */
     this.filterTerm.subscribe(function(newValue) {
         const filterTerm = newValue.trim().toLowerCase()
@@ -80,7 +83,8 @@ var ViewModel = function(placesService, wikipediaService) {
                 info: content
             });
         }, function(error) {
-            console.log(`Error loading place info: ${error}`);
+            console.log(`Error loading place info :${error}`);
+            self.placeInfoError(`Error loading place info`);
         });
     }
 }
