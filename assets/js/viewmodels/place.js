@@ -19,17 +19,19 @@ var ViewModel = function(placesService, wikipediaService) {
     /* observable for the currently selected place */
     this.selectedPlace = ko.observable({});
 
-    /* observable for the current filterTerm */
-    this.filterTerm = ko.observable("");
-
+    /* observable for the current instantaneousFilterTerm */
+    this.instantaneousFilterTerm = ko.observable("");
+    this.delayedFilterTerm = ko.pureComputed(this.instantaneousFilterTerm)
+        .extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
+ 
     /* observable for the place info that is displayed */
     this.placeInfo = ko.observable({});
 
     /* observable for error when loading place info */
     this.placeInfoError = ko.observable("");
 
-    /* Subscribe to changes in filterTerm and update filteredPlaces accordingly */
-    this.filterTerm.subscribe(function(newValue) {
+    /* Subscribe to changes in instantaneousFilterTerm and update filteredPlaces accordingly */
+    this.delayedFilterTerm.subscribe(function(newValue) {
         const filterTerm = newValue.trim().toLowerCase()
         if (!filterTerm || filterTerm.length == 0) {
             self.filteredPlaces(self.places());
