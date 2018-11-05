@@ -14,7 +14,7 @@
 - [x] Attribute third-party api
 - [x] Responsive UI
 - [x] move map
-- [ ] document
+- [x] document
 - [ ] readme
 
 # Extra Credit
